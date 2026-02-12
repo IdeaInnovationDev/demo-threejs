@@ -16,15 +16,35 @@
         <div id="toolbar">
             <div class="tool-section">
                 <h3>2D Shape Tools</h3>
+                <div class="input-group">
+                    <label for="rect-width">Rectangle Width:</label>
+                    <input type="number" id="rect-width" min="0.5" max="10" step="0.1" value="2"><span>m</span>
+                </div>
+                <div class="input-group">
+                    <label for="rect-height">Rectangle Height:</label>
+                    <input type="number" id="rect-height" min="0.5" max="10" step="0.1" value="3"><span>m</span>
+                </div>
                 <button id="add-rectangle" class="tool-btn">Rectangle</button>
+                
+                <div class="input-group">
+                    <label for="circle-radius">Circle Radius:</label>
+                    <input type="number" id="circle-radius" min="0.5" max="10" step="0.1" value="1.5"><span>m</span>
+                </div>
                 <button id="add-circle" class="tool-btn">Circle</button>
+                
+                <div class="input-group">
+                    <label for="polygon-radius">Polygon Radius:</label>
+                    <input type="number" id="polygon-radius" min="0.5" max="10" step="0.1" value="1.5"><span>m</span>
+                </div>
                 <button id="add-polygon" class="tool-btn">Polygon</button>
             </div>
             
             <div class="tool-section">
                 <h3>3D Operations</h3>
-                <label for="extrude-height">Extrusion Height:</label>
-                <input type="number" id="extrude-height" min="0.1" max="10" step="0.1" value="1">
+                <div class="input-group">
+                    <label for="extrude-height">Extrusion Height:</label>
+                    <input type="number" id="extrude-height" min="0.1" max="10" step="0.1" value="1"><span>m</span>
+                </div>
                 <button id="extrude-shape" class="tool-btn">Extrude to 3D</button>
             </div>
             

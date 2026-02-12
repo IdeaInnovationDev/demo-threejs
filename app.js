@@ -237,15 +237,26 @@ function addShape(type) {
     let geometry;
     const color = document.getElementById('color-picker').value;
     
+    // Get dimensions from input fields
+    const rectWidth = parseFloat(document.getElementById('rect-width').value);
+    const rectHeight = parseFloat(document.getElementById('rect-height').value);
+    const circleRadius = parseFloat(document.getElementById('circle-radius').value);
+    const polygonRadius = parseFloat(document.getElementById('polygon-radius').value);
+
+    let shapeDimensions = {};
+
     switch(type) {
         case 'rectangle':
-            geometry = new THREE.PlaneGeometry(2, 3);
+            geometry = new THREE.PlaneGeometry(rectWidth, rectHeight);
+            shapeDimensions = { width: rectWidth, height: rectHeight };
             break;
         case 'circle':
-            geometry = new THREE.CircleGeometry(1.5, 32);
+            geometry = new THREE.CircleGeometry(circleRadius, 32);
+            shapeDimensions = { radius: circleRadius };
             break;
         case 'polygon':
-            geometry = new THREE.CircleGeometry(1.5, 6);
+            geometry = new THREE.CircleGeometry(polygonRadius, 6);
+            shapeDimensions = { radius: polygonRadius };
             break;
     }
     
@@ -267,6 +278,7 @@ function addShape(type) {
     mesh.receiveShadow = true;
     mesh.userData.type = type;
     mesh.userData.is2D = true;
+    mesh.userData.dimensions = shapeDimensions; // Store dimensions
     
     scene.add(mesh);
     objects.push(mesh);
@@ -290,13 +302,16 @@ function extrudeSelected() {
     
     let newGeometry;
     
+    // Retrieve stored dimensions
+    const dimensions = selectedObject.userData.dimensions;
+
     // Create extruded geometry based on shape type
     if (selectedObject.userData.type === 'rectangle') {
-        newGeometry = new THREE.BoxGeometry(2, height, 3);
+        newGeometry = new THREE.BoxGeometry(dimensions.width, height, dimensions.height);
     } else if (selectedObject.userData.type === 'circle') {
-        newGeometry = new THREE.CylinderGeometry(1.5, 1.5, height, 32);
+        newGeometry = new THREE.CylinderGeometry(dimensions.radius, dimensions.radius, height, 32);
     } else if (selectedObject.userData.type === 'polygon') {
-        newGeometry = new THREE.CylinderGeometry(1.5, 1.5, height, 6);
+        newGeometry = new THREE.CylinderGeometry(dimensions.radius, dimensions.radius, height, 6);
     }
     
     const material = new THREE.MeshStandardMaterial({

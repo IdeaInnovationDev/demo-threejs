@@ -79,6 +79,18 @@ header p {
     padding-bottom: 3px;
 }
 
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between input and unit */
+}
+
+.input-group span {
+    font-size: 13px; /* Match input font size */
+    color: #555;
+    white-space: nowrap; /* Prevent "m" from wrapping */
+}
+
 .tool-btn {
     padding: 8px 12px;
     background: #667eea;
