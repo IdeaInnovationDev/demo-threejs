@@ -72,6 +72,8 @@ function init() {
             MIDDLE: THREE.MOUSE.DOLLY,
             RIGHT: THREE.MOUSE.ROTATE
         };
+    } else {
+        console.error('OrbitControls not loaded. Camera controls will not be available.');
     }
     
     // Raycaster for object selection
@@ -212,8 +214,12 @@ function addShape(type) {
 
 // Extrude selected 2D shape to 3D
 function extrudeSelected() {
-    if (!selectedObject || !selectedObject.userData.is2D) {
+    if (!selectedObject) {
         alert('Please select a 2D shape first!');
+        return;
+    }
+    if (!selectedObject.userData.is2D) {
+        alert('Please select a 2D shape to extrude. 3D objects cannot be extruded again.');
         return;
     }
     

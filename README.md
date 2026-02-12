@@ -80,10 +80,15 @@ When an object is selected:
 ### File Structure
 ```
 demo-threejs/
-├── index.html      # Main HTML structure
-├── style.css       # Styling and layout
-├── app.js          # Three.js application logic
-└── README.md       # Documentation
+├── index.html          # Main HTML structure
+├── style.css           # Styling and layout
+├── app.js              # Three.js application logic
+├── README.md           # Documentation
+├── package.json        # Project dependencies
+├── .gitignore          # Git ignore rules
+└── libs/               # Third-party libraries
+    ├── three.min.js    # Three.js library
+    └── OrbitControls.js # Camera controls
 ```
 
 ## Educational Purpose
