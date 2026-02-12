@@ -66,7 +66,7 @@ When an object is selected:
 ## Technical Details
 
 ### Technologies Used
-- **Three.js r128**: 3D graphics library
+- **Three.js r137**: 3D graphics library (security patched version)
 - **OrbitControls**: Camera control system
 - **Vanilla JavaScript**: No framework dependencies
 - **HTML5 Canvas**: Rendering context

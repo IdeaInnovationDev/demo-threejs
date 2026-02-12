@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/IdeaInnovationDev/demo-threejs#readme",
   "dependencies": {
-    "three": "^0.128.0"
+    "three": "^0.137.0"
   }
 }
