@@ -1,0 +1,24 @@
+{
+  "name": "demo-threejs",
+  "version": "1.0.0",
+  "description": "A web-based 3D CAD application built with Three.js for educational purposes, specifically designed for middle school technology classes.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IdeaInnovationDev/demo-threejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/IdeaInnovationDev/demo-threejs/issues"
+  },
+  "homepage": "https://github.com/IdeaInnovationDev/demo-threejs#readme",
+  "dependencies": {
+    "three": "^0.128.0"
+  }
+}

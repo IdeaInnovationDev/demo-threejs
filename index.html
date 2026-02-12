@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D CAD Web Application - 教育用3D設計ツール</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>3D CAD Web Application</h1>
+            <p>教育用3D設計ツール - 2Dから3Dへ</p>
+        </header>
+        
+        <div id="toolbar">
+            <div class="tool-section">
+                <h3>2D Shape Tools</h3>
+                <button id="add-rectangle" class="tool-btn">Rectangle</button>
+                <button id="add-circle" class="tool-btn">Circle</button>
+                <button id="add-polygon" class="tool-btn">Polygon</button>
+            </div>
+            
+            <div class="tool-section">
+                <h3>3D Operations</h3>
+                <label for="extrude-height">Extrusion Height:</label>
+                <input type="number" id="extrude-height" min="0.1" max="10" step="0.1" value="1">
+                <button id="extrude-shape" class="tool-btn">Extrude to 3D</button>
+            </div>
+            
+            <div class="tool-section">
+                <h3>Transform</h3>
+                <button id="move-mode" class="tool-btn">Move</button>
+                <button id="rotate-mode" class="tool-btn">Rotate</button>
+                <button id="scale-mode" class="tool-btn">Scale</button>
+            </div>
+            
+            <div class="tool-section">
+                <h3>Material</h3>
+                <label for="color-picker">Color:</label>
+                <input type="color" id="color-picker" value="#8B4513">
+                <div class="material-presets">
+                    <button class="material-btn" data-color="#8B4513" style="background: #8B4513" title="Wood Brown"></button>
+                    <button class="material-btn" data-color="#D2691E" style="background: #D2691E" title="Light Wood"></button>
+                    <button class="material-btn" data-color="#A0522D" style="background: #A0522D" title="Dark Wood"></button>
+                    <button class="material-btn" data-color="#DEB887" style="background: #DEB887" title="Beige"></button>
+                </div>
+            </div>
+            
+            <div class="tool-section">
+                <h3>Actions</h3>
+                <button id="delete-object" class="tool-btn danger">Delete Selected</button>
+                <button id="clear-scene" class="tool-btn danger">Clear All</button>
+                <button id="export-scene" class="tool-btn">Export Design</button>
+            </div>
+            
+            <div class="tool-section">
+                <h3>View</h3>
+                <button id="reset-camera" class="tool-btn">Reset Camera</button>
+                <button id="toggle-grid" class="tool-btn">Toggle Grid</button>
+            </div>
+        </div>
+        
+        <div id="canvas-container">
+            <canvas id="three-canvas"></canvas>
+            <div id="info-panel">
+                <p><strong>Controls:</strong></p>
+                <ul>
+                    <li>Left Click: Select object</li>
+                    <li>Right Click + Drag: Rotate view</li>
+                    <li>Scroll: Zoom in/out</li>
+                    <li>Middle Click + Drag: Pan</li>
+                </ul>
+                <p id="selected-info"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="libs/three.min.js"></script>
+    <script src="libs/OrbitControls.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
