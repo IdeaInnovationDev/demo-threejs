@@ -5,6 +5,11 @@ let selectedObject = null;
 let objects = [];
 let gridHelper, axesHelper;
 
+// Global variables for toolbar resizing
+let isResizing = false;
+let initialToolbarHeight;
+let initialMouseY;
+
 // Transform mode
 let transformMode = 'none';
 
@@ -106,6 +111,17 @@ function setupEventListeners() {
     // Mouse events for object selection
     renderer.domElement.addEventListener('click', onMouseClick);
     renderer.domElement.addEventListener('mousemove', onMouseMove);
+
+    // Toolbar resizing
+    const toolbarResizer = document.getElementById('toolbar-resizer');
+    if (toolbarResizer) {
+        toolbarResizer.addEventListener('mousedown', onToolbarResizeMouseDown);
+    }
+
+    // Add mouseup and mousemove listeners to the window
+    // so that resizing continues even if mouse leaves the resizer
+    window.addEventListener('mousemove', onToolbarResizeMouseMove);
+    window.addEventListener('mouseup', onToolbarResizeMouseUp);
     
     // Toolbar buttons
     document.getElementById('add-rectangle').addEventListener('click', () => addShape('rectangle'));
@@ -141,16 +157,61 @@ function setupEventListeners() {
     document.addEventListener('keydown', onKeyDown);
 }
 
+// Handle toolbar resize mousedown event
+function onToolbarResizeMouseDown(event) {
+    isResizing = true;
+    initialToolbarHeight = document.getElementById('toolbar').offsetHeight;
+    initialMouseY = event.clientY;
+    document.body.style.cursor = 'ns-resize'; // Change cursor globally during resize
+    event.preventDefault(); // Prevent text selection during drag
+}
+
+// Handle toolbar resize mousemove event
+function onToolbarResizeMouseMove(event) {
+    if (!isResizing) return;
+
+    const toolbar = document.getElementById('toolbar');
+    const header = document.querySelector('header');
+    const headerHeight = header ? header.offsetHeight : 0;
+    const resizerHeight = document.getElementById('toolbar-resizer').offsetHeight;
+
+    const newHeight = initialToolbarHeight + (event.clientY - initialMouseY);
+    
+    // Calculate maximum possible height to prevent toolbar from going beyond window bounds
+    const appHeight = document.getElementById('app').offsetHeight;
+    const minCanvasHeight = 50; // Minimum height for the canvas
+    const maxToolbarHeight = appHeight - headerHeight - resizerHeight - minCanvasHeight;
+
+    // Set minimum and maximum height for the toolbar
+    const minToolbarHeight = 80; // Should match min-height in CSS
+    toolbar.style.maxHeight = `${Math.min(maxToolbarHeight, Math.max(minToolbarHeight, newHeight))}px`;
+
+    onWindowResize(); // Adjust canvas size after toolbar height change
+}
+
+// Handle toolbar resize mouseup event
+function onToolbarResizeMouseUp() {
+    isResizing = false;
+    document.body.style.cursor = ''; // Reset cursor
+}
+
 // Window resize handler
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    const toolbarHeight = document.getElementById('toolbar').offsetHeight;
+    const resizerHeight = document.getElementById('toolbar-resizer').offsetHeight;
+    const headerHeight = document.querySelector('header').offsetHeight;
+    const totalOccupiedHeight = toolbarHeight + resizerHeight + headerHeight;
+
+    camera.aspect = window.innerWidth / (window.innerHeight - totalOccupiedHeight);
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight - 150);
+    
+    renderer.setSize(window.innerWidth, window.innerHeight - totalOccupiedHeight);
 }
 
 // Mouse click handler
 function onMouseClick(event) {
-    const rect = renderer.domElement.getBoundingClientRect();
+    // Only process click if not resizing
+    if (isResizing) return;    const rect = renderer.domElement.getBoundingClientRect();
     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     
